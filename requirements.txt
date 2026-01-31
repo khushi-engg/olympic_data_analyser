@@ -3,3 +3,4 @@ matplotlib
 seaborn
 scipy
 pandas
+plotly==5.18.0
