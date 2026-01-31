@@ -1,3 +1,5 @@
+import os
+
 import streamlit as st
 import pandas as pd
 import preprocessor,helper
@@ -7,9 +9,18 @@ from helper import fetch_medal_tally
 # import seaborn as sns
 import plotly.express as px
 # LOAD DATA FIRST
-df = pd.read_csv("athlete_events.csv")
-region_df = pd.read_csv("noc_regions.csv")
-df=preprocessor.preprocess(df,region_df)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+ATHLETE_PATH = os.path.join(BASE_DIR, "athlete_events.csv")
+REGION_PATH = os.path.join(BASE_DIR, "noc_regions.csv")
+
+def load_data():
+    df = pd.read_csv(ATHLETE_PATH, encoding="latin1")
+    region_df = pd.read_csv(REGION_PATH, encoding="latin1")
+    df = preprocessor.preprocess(df, region_df)
+    return df
+
+df = load_data()
 st.sidebar.title("Olympic Analysis")
 user_menu=st.sidebar.radio(
     "Select an option",
